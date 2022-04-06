@@ -29,9 +29,12 @@
             #Detailsimg{
                 margin-top:10px;    
                 font-family:arial;
-                line-height:25px;               
+                line-height:25px; 
+                font-weight:bold;  
+                color:#060606;            
                 }
             }
+          
             </style>
 </head>
  <body >
@@ -51,13 +54,32 @@
     if(isset($_POST['upload'])){
         $filname= $_FILES['filename'] ['name'];
         $filetmp= $_FILES['filename'] ['tmp_name'];
+        $upoadLocation= 'img/';
         $filesize= getimagesize($filetmp);
         $w= $filesize[0];
         $h= $filesize[1];
+        if(!empty($filname)){           
+          $upload=  move_uploaded_file($filetmp,$upoadLocation.$filname);
+          if($upload==1){
+              print 'upload success';
+          }else{
+              print 'Upload Faile';
+          }
+        }else{
+            print "please Select Your Picture"; 
+        }
+
+
         $filebitsize=$_FILES['filename'] ['size'];
-        $sizeconvertkb=$filebitsize/1024;
-    
-        echo  " <center id='Detailsimg'> Width= ".$w. "<br> Height= ". $h."<br> Size= ".$sizeconvertkb. " <br> ImageName ". $filname. " <br> ImaeLocation".$filetmp."</center>";
+        $sizeconvertkb= round( $filebitsize/1024);
+           
+        
+        
+        echo  " <div id='Detailsimg'> Width= ".$w. 
+        "<br> Height= ". $h.
+        "<br> Size= ".$sizeconvertkb."KB".
+        " <br> ImageName= ". $filname. 
+        " <br> ImaeLocation= ".$filetmp."</div>";
     
 
 
